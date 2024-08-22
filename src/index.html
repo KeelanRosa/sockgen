@@ -7,6 +7,26 @@
   <title>Sock Generator</title>
 </head>
 <body>
+  <main>
+    <h1>Sock Generator</h1>
 
+    <form id="sockForm">
+      <label for="gauge">Gauge:</label>
+      <span>(stitches in 4in/10cm)</span>
+      <input type="number" name="gauge" id="gauge" value="36">
+      <br>
+      <label for="size">Size:</label>
+      <span>(foot circumference in inches)</span>
+      <input type="number" name="size" id="size" value="9">
+      <br>
+      <label for="footLength">Length:</label>
+      <span>(foot length in inches)</span>
+      <input type="number" name="footLength" id="footLength" value="9.25">
+      <br>
+      <button type="button" id="sockBtn">Generate</button>
+    </form>
+
+    <div id="instructions"></div>
+  </main>
 </body>
 </html>
