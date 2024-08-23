@@ -1,4 +1,3 @@
-// import './sock.js';
 const sock = require('./sock');
 
 /**
@@ -31,6 +30,8 @@ expect.extend({toBeCloseToInt});
 /*
 Tests using numbers from existing patterns
 When pattern gives sock size instead of foot size, size is multiplied by 1.25
+TODO should test ease but that's the least likely to be defined in a sock pattern
+    and functionionally static for now anyway
 */
 test('Sock', () => {
     // Kii's Vanilla Sock
@@ -54,4 +55,19 @@ test('Light', () => {
     expect(sock(40, 8)).toBeCloseToInt(63);
     expect(sock(40, 9)).toBeCloseToInt(72);
     expect(sock(40, 10)).toBeCloseToInt(81);
+})
+/*
+Should fail validation
+*/
+test('Impossible patterns', () => {
+    // Gauge <= 0
+    expect(() => { sock(0, 9); }).toThrow('gauge');
+    expect(() => { sock(-1, 9); }).toThrow('gauge');
+    // Size <= 0
+    expect(() => { sock(36, 0); }).toThrow('circumference');
+    expect(() => { sock(36, -1); }).toThrow('circumference');
+    // Type errors
+    expect(() => { sock('a', 9); }).toThrow(TypeError);
+    expect(() => { sock(36, 'a'); }).toThrow(TypeError);
+    expect(() => { sock(36, 9, 'a'); }).toThrow(TypeError);
 })

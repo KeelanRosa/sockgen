@@ -17,7 +17,6 @@ function generate() {
     var size = form.elements["size"].value;
     var footLength = form.elements["footLength"].value;
     var footCount = countMain(gauge, size);
-    console.log(footLength);
     instructions.innerHTML = '';
     instructions.appendChild(component('h2', 'Instructions'));
 
@@ -42,7 +41,6 @@ function generate() {
     legList.appendChild(component('li', 'Bind off using preferred stretchy bind off'));
     instructions.appendChild(legList);
 }
-form.elements["sockBtn"].addEventListener("click", function(event) {
-    event.preventDefault;
+form.addEventListener("submit", function(event) {
     generate();
-});
+})
