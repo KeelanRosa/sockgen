@@ -1,2 +1,9 @@
-/* test style */
-h1 { color: navy; }
+@import "bootstrap/dist/css/bootstrap";
+
+h1 {
+  color: navy;
+}
+
+#sockForm .form-control {
+  max-width: 8rem;
+}

@@ -1,32 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sock Generator</title>
 </head>
+
 <body>
-  <main>
-    <h1>Sock Generator</h1>
+  <main class="container">
+    <div class="row">
+      <div class="col-auto mt-4">
+        <h1>Sock Generator</h1>
+      </div>
+    </div>
 
-    <form id="sockForm" onsubmit="event.preventDefault();">
-      <label for="gauge">Gauge:</label>
-      <span id="descGauge">(stitches in 4in/10cm)</span>
-      <input type="number" name="gauge" id="gauge" value="36" aria-describedby="descGauge" required min="1">
-      <br>
-      <label for="size">Size:</label>
-      <span id="descSize">(foot circumference in inches)</span>
-      <input type="number" name="size" id="size" value="9" step="0.0001" aria-describedby="descSize" required min="2">
-      <br>
-      <label for="footLength">Length:</label>
-      <span id="descLen">(foot length in inches)</span>
-      <input type="number" name="footLength" id="footLength" value="9.25" step="0.0001" aria-describedby="descLen" required min="2">
-      <br>
-      <button type="submit" id="sockBtn">Generate</button>
-    </form>
+    <div class="row">
+      <div class="col-lg-4 my-2">
+        <h2>Measurements</h2>
+        <form id="sockForm" onsubmit="event.preventDefault();">
+          <div class="row mb-3">
+            <div class="col-auto">
+              <label for="gauge" class="form-label">Gauge:</label>
+              <div class="input-group">
+                <input type="number" class="form-control" id="gauge" name="gauge" value="36"
+                  aria-describedby="descGauge" required="required" min="1">
+                <span class="input-group-text" id="descGauge">stitches in 4in/10cm</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-auto">
+              <label for="size" class="form-label">Size:</label>
+              <div class="input-group">
+                <input type="number" class="form-control" id="size" name="size" value="9" step="0.0001"
+                  aria-describedBy="descSize" required="required" min="2">
+                <span class="input-group-text" id="descSize">foot circumference in inches</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-auto">
+              <label for="footLength" class="form-label">Length:</label>
+              <div class="input-group">
+                <input type="number" class="form-control" id="footLength" name="footLength" value="9.25" step="0.0001"
+                  aria-describedby="descLen" required="required" min="2">
+                <span class="input-group-text" id="descLen">foot length in inches</span>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" id="sockBtn">Generate</button>
+        </form>
+      </div>
 
-    <div id="instructions"></div>
+      <div class="col-lg-8 my-2">
+        <div id="instructions"></div>
+      </div>
+    </div>
   </main>
 </body>
+
 </html>

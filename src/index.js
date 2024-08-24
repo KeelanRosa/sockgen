@@ -40,6 +40,11 @@ function generate() {
     legList.appendChild(component('li', 'Work in 2x2 rib for 2"'));
     legList.appendChild(component('li', 'Bind off using preferred stretchy bind off'));
     instructions.appendChild(legList);
+
+    var hList = document.querySelectorAll("h3");
+    for (var i of hList) {
+        i.classList.add("h5");
+    }
 }
 form.addEventListener("submit", function(event) {
     generate();
