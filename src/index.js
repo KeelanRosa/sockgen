@@ -1,5 +1,5 @@
 import './style.css';
-import countMain from './sock.js';
+import { countMain, countToe } from "./sock.js";
 
 function component(type, content) {
     const element = document.createElement(type);
@@ -17,12 +17,23 @@ function generate() {
     var size = form.elements["size"].value;
     var footLength = form.elements["footLength"].value;
     var footCount = countMain(gauge, size);
+    var toeCount = countToe(footCount);
     instructions.innerHTML = '';
     instructions.appendChild(component('h2', 'Instructions'));
 
-    instructions.appendChild(component('h3', 'TODO: toe'));
-    var toeList = component('ul', '');
-    toeList.appendChild(component('li', `End toe with ${footCount/2} sts on each side, ${footCount} sts total`));
+    instructions.appendChild(component("h3", "Toe"));
+    var toeList = component("ul", "");
+    var toeInstruct = [
+        `Cast on ${toeCount} stitches (${toeCount / 2} on each needle) using a Turkish cast on`,
+        "Round 1: Knit across both sides",
+        "Round 2, instep: k1, m1r, knit to 1 stitch before the end, m1l, k1",
+        "Round 2, sole: k1, m1r, knit to 1 stitch before the end, m1l, k1",
+        "Round 3: Knit across both sides",
+        `Rounds 4-${(footCount - toeCount) / 2 + 1}: Repeat rounds 2-3 (end with ${footCount / 2} sts on each side, ${footCount} sts total)`,
+    ];
+    for (var i of toeInstruct) {
+        toeList.appendChild(component("li", i));
+    }
     instructions.appendChild(toeList);
 
     instructions.appendChild(component('h3', 'Foot'));

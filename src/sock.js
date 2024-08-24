@@ -11,10 +11,28 @@ function countMain(gauge, size, ease = 0.8) {
             throw new TypeError(`${i} is not a valid number`);
         }
     }
-    if (gauge <= 0) throw new RangeError("The gauge must be greater than 0 stitches");
-    if (size <= 0) throw new RangeError("The foot circumference must be greater than 0 inches");
-    var base = size * (gauge/4) * ease;
+    if (gauge <= 0)
+        throw new RangeError("The gauge must be greater than 0 stitches");
+    if (size <= 0)
+        throw new RangeError(
+            "The foot circumference must be greater than 0 inches",
+        );
+    var base = size * (gauge / 4) * ease;
     return Math.floor(base) % 2 == 0 ? Math.floor(base) : Math.floor(base) + 1;
 }
 
-module.exports = countMain;
+/**
+ * Calculate toe stitch count
+ * @param {number} main - Main stitch count
+ */
+function countToe(main) {
+    if (isNaN(parseFloat(main))) {
+        throw new TypeError(`${main} is not a valid number`);
+    }
+    if (main <= 0)
+        throw new RangeError("The stitch count must be greater than 0");
+    var base = main * 0.375;
+    return Math.floor(base) % 2 == 0 ? Math.floor(base) : Math.floor(base) + 1;
+}
+
+module.exports = { countMain, countToe };
