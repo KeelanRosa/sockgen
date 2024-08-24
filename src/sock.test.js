@@ -56,6 +56,15 @@ test('Light', () => {
     expect(sock(40, 9)).toBeCloseToInt(72);
     expect(sock(40, 10)).toBeCloseToInt(81);
 })
+
+/*
+Check even stitch counts
+*/
+test('Even stitches', () => {
+    expect(sock(36, 9) % 2).toBe(0); // 259.2
+    expect(sock(7, 12, 1) % 2).toBe(0); // 21
+    expect(sock(14, 12, 1) % 2).toBe(0); // 42
+})
 /*
 Should fail validation
 */
