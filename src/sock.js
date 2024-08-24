@@ -14,7 +14,7 @@ function countMain(gauge, size, ease = 0.8) {
     if (gauge <= 0) throw new RangeError("The gauge must be greater than 0 stitches");
     if (size <= 0) throw new RangeError("The foot circumference must be greater than 0 inches");
     var base = size * (gauge/4) * ease;
-    return Math.floor(base) % 2 == 0 ? Math.floor(base) : Math.ceil(base);
+    return Math.floor(base) % 2 == 0 ? Math.floor(base) : Math.floor(base) + 1;
 }
 
 module.exports = countMain;
