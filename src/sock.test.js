@@ -1,4 +1,4 @@
-const { countMain, countToe } = require("./sock");
+const { countMain, countToe, countHeel, isValidCount } = require("./sock");
 
 /**
  * Compare integers with approximation for rounding
@@ -58,6 +58,7 @@ test("Main", () => {
 
 test("Toes", () => {
     expect(countToe(64)).toBeCloseToInt(24);
+    expect(countToe(countMain(36, 9))).toBeCloseToInt(24);
 
     expect(countToe(countMain(28, 7.5))).toBeCloseToInt(16);
     expect(countToe(countMain(28, 8.5))).toBeCloseToInt(18);
@@ -74,28 +75,61 @@ test("Toes", () => {
     expect(countToe(countMain(40, 10))).toBeCloseToInt(34, 10);
 });
 
+test("Heels", () => {
+    expect(countHeel(66)).toEqual([11, 11]);
+    expect(countHeel(64)).toEqual([11, 10]);
+    expect(countHeel(62)).toEqual([10, 11]);
+    expect(countHeel(60)).toEqual([10, 10]);
+    expect(countHeel(countMain(36, 9))).toEqual([11, 10]);
+
+    // Basically ignoring original patterns due to different heel styles, still using the numbers for test variety
+    expect(countHeel(countMain(28, 7.5))).toEqual([7, 7]);
+    expect(countHeel(countMain(28, 8.5))).toEqual([8, 8]);
+    expect(countHeel(countMain(28, 9.5))).toEqual([9, 9]);
+
+    expect(countHeel(countMain(22, 6.5 * 1.25))).toEqual([6, 6]);
+    expect(countHeel(countMain(22, 7.25 * 1.25))).toEqual([7, 6]);
+    expect(countHeel(countMain(22, 8.75 * 1.25))).toEqual([8, 8]);
+
+    expect(countHeel(countMain(40, 7))).toEqual([9, 10]);
+    expect(countHeel(countMain(40, 8))).toEqual([11, 10]);
+    expect(countHeel(countMain(40, 9))).toEqual([12, 12]);
+    expect(countHeel(countMain(40, 10))).toEqual([13, 14]);
+});
+
 /*
-Check even stitch counts
+Check stitch counts
 */
-test("Even stitches", () => {
+test("Valid stitches", () => {
     expect(countMain(36, 9) % 2).toBe(0); // 259.2
     expect(countMain(7, 12, 1) % 2).toBe(0); // 21
     expect(countMain(14, 12, 1) % 2).toBe(0); // 42
     expect(countToe(72) % 2).toBe(0); // 27
+
+    expect(isValidCount(60)).toBe(true);
+    expect(isValidCount(60.0)).toBe(true);
+    expect(isValidCount(65, false)).toBe(true);
+    expect(() => isValidCount("a")).toThrow(TypeError);
+    expect(() => isValidCount(0)).toThrow(RangeError);
+    expect(() => isValidCount(-10)).toThrow(RangeError);
+    expect(() => isValidCount(65)).toThrow(RangeError);
+    expect(() => isValidCount(1.8)).toThrow(TypeError);
 });
 /*
 Should fail validation
 */
 test("Impossible patterns", () => {
-    // Gauge <= 0
-    expect(() => countMain(0, 9)).toThrow("gauge");
-    expect(() => countMain(-1, 9)).toThrow("gauge");
-    // Size <= 0
+    // Gauge errors
+    expect(() => countMain(0, 9)).toThrow(RangeError);
+    expect(() => countMain(-1, 9)).toThrow(RangeError);
+    // Size errors
     expect(() => countMain(36, 0)).toThrow("circumference");
     expect(() => countMain(36, -1)).toThrow("circumference");
-    // Main <= 0
+    // Main errors
     expect(() => countToe(0)).toThrow("stitch");
     expect(() => countToe(-1)).toThrow("stitch");
+    expect(() => countHeel(-2)).toThrow("stitch");
+    expect(() => countHeel(5)).toThrow("stitch");
     // Type errors
     expect(() => countMain("a", 9)).toThrow(TypeError);
     expect(() => countMain(36, "a")).toThrow(TypeError);
