@@ -1,0 +1,10 @@
+:root {
+  --accent: #cc4a00;
+  --light: #ffda27;
+}
+body {
+  accent-color: var(--accent);
+}
+a {
+  color: var(--accent);
+}

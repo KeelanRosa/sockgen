@@ -8,14 +8,15 @@
   <title>Sock Generator</title>
 </head>
 
-<body>
-  <main class="container">
+<body class="d-flex flex-column min-vh-100">
+  <header class="container">
     <div class="row">
       <div class="col-auto mt-4">
         <h1>Sock Generator</h1>
       </div>
     </div>
-
+  </header>
+  <main class="container">
     <div class="row">
       <div class="col-lg-4 my-2">
         <h2>Measurements</h2>
@@ -50,7 +51,7 @@
               </div>
             </div>
           </div>
-          <button type="submit" class="btn btn-primary" id="sockBtn">Generate</button>
+          <button type="submit" class="btn btn-kr d-print-none" id="sockBtn">Generate</button>
         </form>
       </div>
 
@@ -59,6 +60,15 @@
       </div>
     </div>
   </main>
+
+  <footer class="container mt-auto text-center border-top border-kr-subtle py-4">
+    <div class="row-cols-1">
+      <div class="col">
+        Created by <a href="https://keelanrosa.com">Keelan Rosa</a> | <a
+          href="https://github.com/KeelanRosa/sockgen">View code on GitHub</a>
+      </div>
+    </div>
+  </footer>
 </body>
 
 </html>

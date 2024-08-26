@@ -1,9 +1,45 @@
 @import "bootstrap/dist/css/bootstrap";
+@import "com.keelanrosa.css";
 
 h1 {
-  color: navy;
+  color: var(--accent);
 }
 
 #sockForm .form-control {
   max-width: 8rem;
+}
+
+.btn-kr {
+  background-color: var(--light);
+  border: var(--accent) 1px solid;
+  color: #000;
+}
+.btn-kr:hover {
+  background-color: #000;
+  color: var(--light);
+}
+
+.border-kr-subtle {
+  border-color: var(--light) !important;
+}
+
+@media print {
+  .label {
+    display: inline;
+  }
+  .input-group {
+    display: inline-flex;
+    border: 0;
+  }
+  .form-control {
+    display: inline;
+    border: 0;
+    border-radius: 0;
+    border-bottom: 1px solid;
+    appearance: textfield;
+  }
+  .input-group-text {
+    display: inline;
+    border: 0;
+  }
 }
