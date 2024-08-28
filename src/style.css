@@ -23,6 +23,18 @@ h1 {
   border-color: var(--light) !important;
 }
 
+dt {
+  float: left;
+  clear: left;
+}
+dt::after {
+  content: ': ';
+  padding-right: 0.3em;
+}
+dd {
+  margin-bottom: 0.2rem;
+}
+
 @media print {
   .label {
     display: inline;

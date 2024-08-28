@@ -22,6 +22,12 @@ function generate() {
     instructions.innerHTML = '';
     instructions.appendChild(component('h2', 'Instructions'));
 
+    if (form.elements["stitchTechnique"].checked) {
+        document.getElementById('techniques').classList = 'd-block';
+    } else {
+        document.getElementById('techniques').classList = 'd-none';
+    }
+
     instructions.appendChild(component("h3", "Toe"));
     var toeList = component("ul", "");
     var toeInstruct = [
@@ -53,19 +59,19 @@ function generate() {
     var heelList = component("ul", "");
     var heelRowCount = heelCount[0] * 2; // 1 row to turn each side stitch into a twin stitch
     var heelInstruct = [
-        `Row 1 (RS): Knit to 1 stitch before the end, ts, turn`,
-        `Row 2 (WS): Purl to 1 stitch before the end, ts, turn`,
+        `Row 1 (RS): Knit to 1 stitch before the end of the sole stitches, ts, turn`,
+        `Row 2 (WS): Purl to 1 stitch before the end of the sole stitches, ts, turn`,
         `Row 3 (RS): Knit to 1 stitch before the previous twin stitch, ts, turn`,
         `Row 4 (WS): Purl to 1 stitch before the previous twin stitch, ts, turn`,
-        `Rows 5-${heelRowCount}: Repeat rows 3-4 ${(heelRowCount - 4) / 2} more times, ending on wrong side row (${heelCount[0]} twin stitches on each side, ${heelCount[1]} regular stitches in the middle)`,
+        `Rows 5-${heelRowCount}: Repeat rows 3-4 ${(heelRowCount - 4) / 2} more times, ending on a wrong side row (${heelCount[0]} twin stitches on each side, ${heelCount[1]} regular stitches in the middle)`,
         `Row ${heelRowCount + 1} (RS): Knit to the first twin stitch, knit both strands of the twin stitch together, make triplet, turn`,
         `Row ${heelRowCount + 2} (WS): Purl to the first twin stitch, purl both strands of the twin stitch together, make triplet, turn`,
         `Row ${heelRowCount + 3} (RS): Knit to the triplet, knit the strands of the triplet together, make triplet, turn`,
         `Row ${heelRowCount + 4} (WS): Purl to the triplet, purl the strands of the triplet together, make triplet, turn`,
         `Rows ${heelRowCount + 5}-${heelRowCount * 2 - 2}: Repeat rows ${heelRowCount + 3}-${heelRowCount + 4} until there is only one triplet left on each side of the heel, ending on a wrong side row`,
         `Row ${heelRowCount * 2 - 1} (RS): Knit to the triplet, knit the strands of the triplet together`,
-        `Row ${heelRowCount * 2}, instep: Knit across`,
-        `Row ${heelRowCount * 2}, sole: Knit the strands of the last triplet together, knit across`,
+        `Round ${heelRowCount * 2}, instep: Knit across`,
+        `Round ${heelRowCount * 2}, sole: Knit the strands of the last triplet together, knit across`,
     ];
     for (var i of heelInstruct) {
         heelList.appendChild(component("li", i));
