@@ -1,29 +1,30 @@
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
 
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require("path");
+const autoprefixer = require("autoprefixer");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-const isProduction = process.env.NODE_ENV == 'production';
+const isProduction = process.env.NODE_ENV == "production";
 
-
-const stylesHandler = isProduction ? MiniCssExtractPlugin.loader : 'style-loader';
-
-
+const stylesHandler = isProduction
+    ? MiniCssExtractPlugin.loader
+    : "style-loader";
 
 const config = {
-    entry: './src/index.js',
+    entry: "./src/index.js",
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, "dist"),
         clean: true,
     },
     devServer: {
         open: true,
-        host: 'localhost',
+        host: "localhost",
+        client: { overlay: false },
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './src/index.html',
+            template: "./src/index.html",
         }),
 
         // Add your plugins here
@@ -33,15 +34,36 @@ const config = {
         rules: [
             {
                 test: /\.(js|jsx)$/i,
-                loader: 'babel-loader',
+                loader: "babel-loader",
             },
             {
                 test: /\.css$/i,
-                use: [stylesHandler,'css-loader'],
+                use: [stylesHandler, "css-loader"],
             },
             {
                 test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
-                type: 'asset',
+                type: "asset",
+            },
+            {
+                test: /\.(scss)$/,
+                use: [
+                    stylesHandler,
+                    "css-loader",
+                    {
+                        loader: "postcss-loader",
+                        options: {
+                            postcssOptions: {
+                                plugins: [autoprefixer],
+                            },
+                        },
+                    },
+                    {
+                        loader: "sass-loader",
+                        options: {
+                            sassOptions: { quietDeps: true },
+                        },
+                    },
+                ],
             },
 
             // Add your rules for custom modules here
@@ -52,14 +74,12 @@ const config = {
 
 module.exports = () => {
     if (isProduction) {
-        config.mode = 'production';
-        
+        config.mode = "production";
+
         config.plugins.push(new MiniCssExtractPlugin());
-        
-        
     } else {
-        config.mode = 'development';
-        config.devtool = 'cheap-source-map';
+        config.mode = "development";
+        config.devtool = "cheap-source-map";
     }
     return config;
 };

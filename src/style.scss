@@ -1,0 +1,90 @@
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import "bootstrap/scss/functions";
+
+// 2. Include any default variable overrides here
+
+// 3. Include remainder of required Bootstrap stylesheets (including any separate color mode stylesheets)
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/variables-dark";
+
+// 4. Include any default map overrides here
+$primary: #cc4a00;
+$light: #ffda27;
+$link-color: $primary;
+
+$theme-kr: (
+    "primary": $primary,
+    "light": $light
+);
+
+$theme-colors: map-merge($theme-colors, $theme-kr);
+
+// 5. Include remainder of required parts
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/root";
+
+// 6. Optionally include any other parts as needed
+@import "bootstrap/scss/utilities";
+@import "bootstrap/scss/reboot";
+@import "bootstrap/scss/type";
+// @import "bootstrap/scss/images";
+@import "bootstrap/scss/containers";
+@import "bootstrap/scss/grid";
+// @import "bootstrap/scss/helpers";
+@import "bootstrap/scss/buttons";
+@import "bootstrap/scss/forms";
+@import "bootstrap/scss/button-group";
+
+// 7. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
+@import "bootstrap/scss/utilities/api";
+
+// 8. Add additional custom code here
+h1 {
+    color: $primary;
+}
+.btn-light {
+    border-color: $primary;
+}
+.btn-light:hover {
+    background-color: #000;
+    color: $light;
+    border-color: $primary;
+}
+
+#sockForm .form-control {
+  max-width: 8rem;
+}
+
+dt {
+  float: left;
+  clear: left;
+}
+dt::after {
+  content: ': ';
+  padding-right: 0.3em;
+}
+dd {
+  margin-bottom: 0.2rem;
+}
+
+@media print {
+  .label {
+    display: inline;
+  }
+  .input-group {
+    display: inline-flex;
+    border: 0;
+  }
+  .form-control {
+    display: inline;
+    border: 0;
+    border-radius: 0;
+    border-bottom: 1px solid;
+    appearance: textfield;
+  }
+  .input-group-text {
+    display: inline;
+    border: 0;
+  }
+}

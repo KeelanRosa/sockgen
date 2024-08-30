@@ -1,4 +1,4 @@
-import './style.css';
+import './style.scss';
 import { countMain, countToe, countHeel } from "./sock.js";
 
 function component(type, content) {
