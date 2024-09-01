@@ -4,6 +4,8 @@ const path = require("path");
 const autoprefixer = require("autoprefixer");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const sockjson = require("./src/data.json");
+const data = sockjson.sockjson;
 
 const isProduction = process.env.NODE_ENV == "production";
 
@@ -24,6 +26,14 @@ const config = {
     },
     plugins: [
         new HtmlWebpackPlugin({
+            templateParameters: () => {
+                return {
+                    dataTitle: data.title,
+                    dataDesc: data.desc,
+                    dataMat: data.materials,
+                    dataTech: data.techniques,
+                };
+            },
             template: "./src/index.html",
         }),
 

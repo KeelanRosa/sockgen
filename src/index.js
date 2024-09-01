@@ -1,5 +1,7 @@
-import './style.scss';
+import "./style.scss";
 import { countMain, countToe, countHeel } from "./sock.js";
+import sockjson from "./data.json";
+const data = sockjson.sockjson;
 
 function component(type, content) {
     const element = document.createElement(type);
@@ -7,30 +9,42 @@ function component(type, content) {
     return element;
 }
 
-const form = document.getElementById('sockForm');
-const instructions = document.getElementById('instructions');
+const form = document.getElementById("sockForm");
+const instructions = document.getElementById("instructions");
+
 /**
  * Generate sock pattern
  */
+const patternData = {
+    gauge: 0,
+    size: 0,
+    footLength: 0,
+    techniques: true,
+};
+var toeInstruct = [];
+var footInstruct = [];
+var heelInstruct = [];
+var legInstruct = [];
 function generate() {
-    var gauge = form.elements["gauge"].value;
-    var size = form.elements["size"].value;
-    var footLength = form.elements["footLength"].value;
-    var footCount = countMain(gauge, size);
+    patternData.gauge = form.elements["gauge"].value;
+    patternData.size = form.elements["size"].value;
+    patternData.footLength = form.elements["footLength"].value;
+    patternData.techniques = form.elements["stitchTechnique"].checked;
+    var footCount = countMain(patternData.gauge, patternData.size);
     var toeCount = countToe(footCount);
     var heelCount = countHeel(footCount);
-    instructions.innerHTML = '';
-    instructions.appendChild(component('h2', 'Instructions'));
+    instructions.innerHTML = "";
+    instructions.appendChild(component("h2", "Instructions"));
 
-    if (form.elements["stitchTechnique"].checked) {
-        document.getElementById('techniques').classList = 'd-block';
+    if (patternData.techniques) {
+        document.getElementById("techniques").classList = "d-block";
     } else {
-        document.getElementById('techniques').classList = 'd-none';
+        document.getElementById("techniques").classList = "d-none";
     }
 
     instructions.appendChild(component("h3", "Toe"));
     var toeList = component("ul", "");
-    var toeInstruct = [
+    toeInstruct = [
         `Cast on ${toeCount} stitches (${toeCount / 2} on each needle) using a Turkish cast on`,
         "Round 1: Knit across both sides",
         "Round 2, instep: k1, m1r, knit to 1 stitch before the end, m1l, k1",
@@ -43,10 +57,15 @@ function generate() {
     }
     instructions.appendChild(toeList);
 
-    instructions.appendChild(component('h3', 'Foot'));
-    var footList = component('ul', '');
-    footList.appendChild(component('li', `Work in St st across both sides until sock measures approximately ${footLength - 2}"`));
-    footList.appendChild(component('li', 'Knit across instep one more time to reach the heel stitches'));
+    instructions.appendChild(component("h3", "Foot"));
+    var footList = component("ul", "");
+    footInstruct = [
+        `Work in St st across both sides until sock measures approximately ${patternData.footLength - 2}"`,
+        "Knit across instep one more time to reach the heel stitches",
+    ];
+    for (var i of footInstruct) {
+        footList.appendChild(component("li", i));
+    }
     instructions.appendChild(footList);
 
     instructions.appendChild(component("h3", "Heel"));
@@ -58,7 +77,7 @@ function generate() {
     );
     var heelList = component("ul", "");
     var heelRowCount = heelCount[0] * 2; // 1 row to turn each side stitch into a twin stitch
-    var heelInstruct = [
+    heelInstruct = [
         `Row 1 (RS): Knit to 1 stitch before the end of the sole stitches, ts, turn`,
         `Row 2 (WS): Purl to 1 stitch before the end of the sole stitches, ts, turn`,
         `Row 3 (RS): Knit to 1 stitch before the previous twin stitch, ts, turn`,
@@ -78,12 +97,18 @@ function generate() {
     }
     instructions.appendChild(heelList);
 
-    instructions.appendChild(component('h3', 'Leg'));
-    var legList = component('ul', '');
-    legList.appendChild(component('li', `Work in St st across both sides until leg measures approximately ${Math.floor(footLength - 2
-        )}" (or 2" less than desired leg length)`));
-    legList.appendChild(component('li', 'Work in 2x2 rib for 2"'));
-    legList.appendChild(component('li', 'Bind off using preferred stretchy bind off'));
+    instructions.appendChild(component("h3", "Leg"));
+    var legList = component("ul", "");
+    legInstruct = [
+        `Work in St st across both sides until leg measures approximately ${Math.floor(
+            patternData.footLength - 2,
+        )}" (or 2" less than desired leg length)`,
+        'Work in 2x2 rib for 2"',
+        "Bind off using preferred stretchy bind off",
+    ];
+    for (var i of legInstruct) {
+        legList.appendChild(component("li", i));
+    }
     instructions.appendChild(legList);
 
     var hList = document.querySelectorAll("h3");
@@ -91,6 +116,71 @@ function generate() {
         i.classList.add("h5");
     }
 }
-form.addEventListener("submit", function(event) {
+form.addEventListener("submit", function (event) {
     generate();
-})
+});
+
+/**
+ * Generate PDF
+ */
+const doc = {
+    info: { title: data.title },
+    language: "en-US",
+    pageMargins: [72, 36],
+    content: [],
+    styles: {
+        h1: { bold: true, alignment: "center" },
+        h2: { bold: true, margin: [0, 12, 0, 0] },
+        h3: { bold: true, italics: true, margin: [0, 6, 0, 0] },
+    },
+    footer: {
+        text: "pattern generated by sockgen",
+        alignment: "right",
+        margin: [0, 0, 72, 0],
+        link: "https://keelanrosa.com/sockgen",
+        decoration: "overline",
+    },
+};
+async function getPdfFont() {
+    const { default: pdfFonts } = await import("pdfmake/build/vfs_fonts");
+    return pdfFonts;
+}
+async function getPdf() {
+    const pdfFonts = await getPdfFont();
+    const { default: pdfMake } = await import("pdfmake/build/pdfmake");
+    console.log('loading PDF');
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
+    var tech = [];
+    if (patternData.techniques) {
+        tech = [{ text: "Techniques", style: "h2" }];
+        for (var i of data.techniques) {
+            tech.push({
+                text: [{ text: i.dt + ": ", bold: true }, i.dd],
+            });
+        }
+    }
+    doc.content = [
+        { text: data.title, style: "h1" },
+        data.desc,
+        { text: "Measurements", style: "h2" },
+        `Gauge: ${patternData.gauge} stitches in 4in/10cm`,
+        `Size: ${patternData.size}" foot circumference`,
+        `Length: ${patternData.footLength}" foot length`,
+        { text: "Materials", style: "h2" },
+        data.materials,
+        tech,
+        { text: "Instructions", style: "h2" },
+        { text: "Toe", style: "h3" },
+        { ul: toeInstruct },
+        { text: "Foot", style: "h3" },
+        { ul: footInstruct },
+        { text: "Heel", style: "h3" },
+        { ul: heelInstruct },
+        { text: "Leg", style: "h3" },
+        { ul: legInstruct },
+    ];
+    pdfMake.createPdf(doc).download("kii_vanilla_socks");
+}
+document.getElementById("download").onclick = function (event) {
+    getPdf();
+};

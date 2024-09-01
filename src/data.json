@@ -1,0 +1,38 @@
+{
+  "sockjson": {
+    "title": "Kii's Vanilla Socks",
+    "desc": "Toe-up socks using a shadow-wrapped heel, because i like being able to finish my socks whenever i want and don't like messing with gussets.",
+    "materials": [
+      "Instructions are written for a circular needle.",
+      "1 skein sock yarn and a US size 1 (2.25mm) needle are the standard sock-knitting supplies but the whole point of a generator is the ability to go off the default. Whatever floats your gauge."
+    ],
+    "techniques": [
+      { "dt": "St st", "dd": "Stockinette stitch — knit across" },
+      {
+        "dt": "m1r",
+        "dd": "Insert tip of the right needle into the stitch below the next stitch on the left needle. Lift the stitch onto the left needle and knit."
+      },
+      {
+        "dt": "m1l",
+        "dd": "Insert tip of the left needle into the second stitch below the last stitch on the right needle. Lift the stitch onto the left needle and knit."
+      },
+      {
+        "dt": "ts (knit)",
+        "dd": "Insert tip of the right needle into the right leg of the stitch below the stitch on the left needle and lift the leg onto the left needle. Knit through the leg. Slip the stitch back onto the left needle."
+      },
+      {
+        "dt": "ts (purl)",
+        "dd": "Slip stitch. Lift the bump below the slipped stitch with the left needle. Purl into the lifted bump. Slip the new stitch and the original slipped stitch back onto the left needle."
+      },
+      {
+        "dt": "make triplet (knit)",
+        "dd": "Lift the right leg of the stitch below a twin stitch onto the left needle. Knit through the lifted leg. Slip the stitch back onto the left needle."
+      },
+      {
+        "dt": "make triplet (purl)",
+        "dd": "Slip twin stitch. Lift the bump below the slipped stitch with the left needle. Purl into the lifted bump. Slip the new stitch and original slipped twin stitch back onto the left needle."
+      },
+      { "dt": "2x2 rib", "dd": "*k2, p2, repeat from * to end of row" }
+    ]
+  }
+}
